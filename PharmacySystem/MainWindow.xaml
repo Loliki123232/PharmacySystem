@@ -1,0 +1,152 @@
+﻿<Window x:Class="PharmacySystem.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Аптека - Управление" 
+        Height="700" 
+        Width="1000"
+        FontFamily="Segoe UI">
+
+    <Grid>
+        <TabControl FontSize="14">
+            <!-- Вкладка сотрудников -->
+            <TabItem Header="Сотрудники" FontWeight="Bold">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Панель поиска и фильтрации -->
+                    <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="10">
+                        <TextBox x:Name="SearchBox" Width="200" Margin="5" 
+                                 TextChanged="SearchBox_TextChanged" FontFamily="Segoe UI"
+                                 ToolTip="Поиск по ФИО сотрудника"/>
+                        <ComboBox x:Name="PositionFilter" Width="150" Margin="5"
+                                  SelectionChanged="FilterChanged" FontFamily="Segoe UI">
+                            <ComboBoxItem FontFamily="Segoe UI">Все должности</ComboBoxItem>
+                            <ComboBoxItem FontFamily="Segoe UI">Заведующий</ComboBoxItem>
+                            <ComboBoxItem FontFamily="Segoe UI">Фармацевт</ComboBoxItem>
+                            <ComboBoxItem FontFamily="Segoe UI">Товаровед</ComboBoxItem>
+                            <ComboBoxItem FontFamily="Segoe UI">Кассир</ComboBoxItem>
+                            <ComboBoxItem FontFamily="Segoe UI">Консультант</ComboBoxItem>
+                            <ComboBoxItem FontFamily="Segoe UI">Обслуживающий персонал</ComboBoxItem>
+                        </ComboBox>
+                        <Button Content="Обновить" Click="RefreshData_Click" Margin="5" 
+                                FontFamily="Segoe UI" Padding="10,5"/>
+                    </StackPanel>
+
+                    <!-- Таблица данных -->
+                    <DataGrid x:Name="EmployeesGrid" Grid.Row="1" Margin="10" 
+          AutoGenerateColumns="False" SelectionMode="Single"
+          FontFamily="Segoe UI" IsReadOnly="True"
+          MouseDoubleClick="EmployeesGrid_MouseDoubleClick">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="ID" Binding="{Binding EmployeeID}" Width="50"/>
+                            <DataGridTextColumn Header="ФИО" Binding="{Binding FullName}" Width="200"/>
+                            <DataGridTextColumn Header="Должность" Binding="{Binding Position}" Width="150"/>
+                            <DataGridTextColumn Header="Зарплата" Binding="{Binding Salary, StringFormat=C2}" Width="100"/>
+                            <DataGridTextColumn Header="Дата приема" Binding="{Binding HireDate, StringFormat=dd.MM.yyyy}" Width="120"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                    <!-- Панель управления -->
+                    <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
+                        <Button Content="Добавить" Click="AddEmployee_Click" Width="100" Margin="5" 
+                                Padding="10,5" FontFamily="Segoe UI" Background="#4CAF50" Foreground="White"/>
+                        <Button Content="Редактировать" Click="EditEmployee_Click" Width="100" Margin="5" 
+                                Padding="10,5" FontFamily="Segoe UI" Background="#2196F3" Foreground="White"/>
+                        <Button Content="Удалить" Click="DeleteEmployee_Click" Width="100" Margin="5" 
+                                Padding="10,5" FontFamily="Segoe UI" Background="#F44336" Foreground="White"/>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+
+            <!-- Вкладка лекарств -->
+            <TabItem Header="Лекарства" FontWeight="Bold">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Поиск лекарств -->
+                    <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="10">
+                        <TextBox x:Name="MedicineSearch" Width="250" Margin="5" 
+                                 TextChanged="MedicineSearch_TextChanged" FontFamily="Segoe UI"
+                                 ToolTip="Поиск по названию или производителю"/>
+                        <CheckBox x:Name="PrescriptionOnly" Content="Только рецептурные" 
+                                  Margin="5" VerticalAlignment="Center" FontFamily="Segoe UI"/>
+                        <Button Content="Обновить" Click="RefreshData_Click" Margin="5" 
+                                FontFamily="Segoe UI" Padding="10,5"/>
+                    </StackPanel>
+
+                    <!-- Таблица лекарств -->
+                    <DataGrid x:Name="MedicinesGrid" Grid.Row="1" Margin="10" 
+          AutoGenerateColumns="False" SelectionMode="Single"
+          FontFamily="Segoe UI" IsReadOnly="True"
+          MouseDoubleClick="MedicinesGrid_MouseDoubleClick">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="ID" Binding="{Binding MedicineID}" Width="50"/>
+                            <DataGridTextColumn Header="Название" Binding="{Binding Name}" Width="200"/>
+                            <DataGridTextColumn Header="Производитель" Binding="{Binding Manufacturer}" Width="150"/>
+                            <DataGridTextColumn Header="Форма" Binding="{Binding Form}" Width="100"/>
+                            <DataGridTextColumn Header="Цена" Binding="{Binding Price, StringFormat=C2}" Width="80"/>
+                            <DataGridTextColumn Header="Количество" Binding="{Binding Quantity}" Width="80"/>
+                            <DataGridTextColumn Header="Срок годности" Binding="{Binding ExpiryDate, StringFormat=dd.MM.yyyy}" Width="120"/>
+                            <DataGridCheckBoxColumn Header="Рецепт" Binding="{Binding PrescriptionRequired}" Width="60"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                    <!-- Управление лекарствами -->
+                    <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
+                        <Button Content="Добавить лекарство" Click="AddMedicine_Click" Width="120" Margin="5" 
+                                Padding="10,5" FontFamily="Segoe UI" Background="#4CAF50" Foreground="White"/>
+                        <Button Content="Редактировать" Click="EditMedicine_Click" Width="100" Margin="5" 
+                                Padding="10,5" FontFamily="Segoe UI" Background="#2196F3" Foreground="White"/>
+                        <Button Content="Удалить" Click="DeleteMedicine_Click" Width="100" Margin="5" 
+                                Padding="10,5" FontFamily="Segoe UI" Background="#F44336" Foreground="White"/>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+
+            <!-- Вкладка статистики -->
+            <TabItem Header="Статистика" FontWeight="Bold">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="10">
+                        <TextBlock Text="Общая статистика аптеки" FontSize="16" FontWeight="Bold" FontFamily="Segoe UI"/>
+                    </StackPanel>
+
+                    <StackPanel Grid.Row="1" Margin="10">
+                        <Border BorderBrush="Gray" BorderThickness="1" CornerRadius="5" Padding="10" Margin="0,0,0,10">
+                            <StackPanel>
+                                <TextBlock Text="Количество сотрудников:" FontWeight="Bold" FontFamily="Segoe UI"/>
+                                <TextBlock x:Name="txtEmployeeCount" FontSize="14" Margin="0,5,0,0" FontFamily="Segoe UI"/>
+                            </StackPanel>
+                        </Border>
+
+                        <Border BorderBrush="Gray" BorderThickness="1" CornerRadius="5" Padding="10" Margin="0,0,0,10">
+                            <StackPanel>
+                                <TextBlock Text="Количество лекарств:" FontWeight="Bold" FontFamily="Segoe UI"/>
+                                <TextBlock x:Name="txtMedicineCount" FontSize="14" Margin="0,5,0,0" FontFamily="Segoe UI"/>
+                            </StackPanel>
+                        </Border>
+
+                        <Border BorderBrush="Gray" BorderThickness="1" CornerRadius="5" Padding="10">
+                            <StackPanel>
+                                <TextBlock Text="Лекарства с истекающим сроком годности:" FontWeight="Bold" FontFamily="Segoe UI"/>
+                                <TextBlock x:Name="txtExpiringMedicines" FontSize="14" Margin="0,5,0,0" FontFamily="Segoe UI"/>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>

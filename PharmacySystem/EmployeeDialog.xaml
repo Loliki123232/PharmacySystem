@@ -1,0 +1,110 @@
+﻿<Window x:Class="PharmacySystem.EmployeeDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Редактирование сотрудника"
+        Height="536"
+        Width="450"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="NoResize"
+        Loaded="Window_Loaded"
+        KeyDown="Window_KeyDown">
+
+	<Window.Resources>
+		<Style TargetType="TextBox">
+			<Setter Property="VerticalContentAlignment" Value="Center"/>
+			<Setter Property="Padding" Value="5"/>
+			<Setter Property="FontSize" Value="14"/>
+			<Setter Property="Margin" Value="0,0,0,10"/>
+		</Style>
+		<Style TargetType="Label">
+			<Setter Property="FontWeight" Value="Bold"/>
+			<Setter Property="Margin" Value="0,10,0,5"/>
+			<Setter Property="FontSize" Value="14"/>
+		</Style>
+		<Style TargetType="ComboBox">
+			<Setter Property="VerticalContentAlignment" Value="Center"/>
+			<Setter Property="Padding" Value="5"/>
+			<Setter Property="FontSize" Value="14"/>
+			<Setter Property="Margin" Value="0,0,0,10"/>
+		</Style>
+		<Style TargetType="DatePicker">
+			<Setter Property="VerticalContentAlignment" Value="Center"/>
+			<Setter Property="Padding" Value="5"/>
+			<Setter Property="FontSize" Value="14"/>
+			<Setter Property="Margin" Value="0,0,0,20"/>
+		</Style>
+		<Style TargetType="Button">
+			<Setter Property="Width" Value="100"/>
+			<Setter Property="Height" Value="35"/>
+			<Setter Property="FontSize" Value="14"/>
+			<Setter Property="Margin" Value="10,0,0,0"/>
+		</Style>
+	</Window.Resources>
+
+	<Grid Margin="15">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto"/>
+			<!-- 0: Заголовок -->
+			<RowDefinition Height="Auto"/>
+			<!-- 1: Label ФИО -->
+			<RowDefinition Height="Auto"/>
+			<!-- 2: TextBox ФИО -->
+			<RowDefinition Height="Auto"/>
+			<!-- 3: Label Должность -->
+			<RowDefinition Height="Auto"/>
+			<!-- 4: ComboBox Должность -->
+			<RowDefinition Height="Auto"/>
+			<!-- 5: Label Зарплата -->
+			<RowDefinition Height="Auto"/>
+			<!-- 6: TextBox Зарплата -->
+			<RowDefinition Height="Auto"/>
+			<!-- 7: Label Дата приема -->
+			<RowDefinition Height="Auto"/>
+			<!-- 8: DatePicker Дата приема -->
+			<RowDefinition Height="*"/>
+			<!-- 9: Пустое пространство -->
+			<RowDefinition Height="Auto"/>
+			<!-- 10: Кнопки -->
+		</Grid.RowDefinitions>
+
+		<!-- Заголовок -->
+		<TextBlock Grid.Row="0" Text="Данные сотрудника"
+                   FontSize="18" FontWeight="Bold"
+                   HorizontalAlignment="Center" Margin="0,0,0,20"/>
+
+		<!-- ФИО -->
+		<Label Grid.Row="1" Content="ФИО:"/>
+		<TextBox x:Name="txtFullName" Grid.Row="2"/>
+
+		<!-- Должность -->
+		<Label Grid.Row="3" Content="Должность:"/>
+		<ComboBox x:Name="cmbPosition" Grid.Row="4">
+			<ComboBoxItem>Заведующий</ComboBoxItem>
+			<ComboBoxItem>Фармацевт</ComboBoxItem>
+			<ComboBoxItem>Товаровед</ComboBoxItem>
+			<ComboBoxItem>Кассир</ComboBoxItem>
+			<ComboBoxItem>Консультант</ComboBoxItem>
+			<ComboBoxItem>Обслуживающий персонал</ComboBoxItem>
+		</ComboBox>
+
+		<!-- Зарплата -->
+		<Label Grid.Row="5" Content="Зарплата (руб.):"/>
+		<TextBox x:Name="txtSalary" Grid.Row="6"/>
+
+		<!-- Дата приема -->
+		<Label Grid.Row="7" Content="Дата приема на работу:"/>
+		<DatePicker x:Name="dpHireDate" Grid.Row="8"
+                   SelectedDate="{Binding HireDate}"/>
+
+		<!-- Кнопки -->
+		<StackPanel Grid.Row="10" Orientation="Horizontal"
+                   HorizontalAlignment="Right" Margin="0,20,0,0">
+			<Button Content="Сохранить" x:Name="btnSave"
+                   Click="SaveButton_Click"
+                   Background="#4CAF50" Foreground="White"/>
+			<Button Content="Отмена" x:Name="btnCancel"
+                   Click="CancelButton_Click"
+                   Background="#F44336" Foreground="White"/>
+		</StackPanel>
+	</Grid>
+</Window>
